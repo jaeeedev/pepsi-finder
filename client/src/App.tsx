@@ -1,14 +1,20 @@
 import Main from "./components/Main";
-import GlobalStyles from "./components/GlobalStyle";
+import GlobalStyles from "./styles/GlobalStyle";
+import { ThemeProvider } from "styled-components";
+import { useState } from "react";
+import { darkTheme, lightTheme } from "./styles/theme";
 
 //11월의 행사 이런 문구 넣을 것
 
 function App() {
+  const [theme, setTheme] = useState<string>("dark");
+  const isDark = theme === "dark";
+
   return (
-    <>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
-      <Main />
-    </>
+      <Main setTheme={setTheme} theme={theme} />
+    </ThemeProvider>
   );
 }
 

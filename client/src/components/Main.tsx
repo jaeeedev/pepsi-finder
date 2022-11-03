@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { Theme } from "../styles/theme";
 
 //768px
 const Container = styled.section`
   position: relative;
   max-width: 768px;
   margin: 0 auto;
+`;
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Switch = styled.button`
+  width: 100px;
+  height: 30px;
 `;
 
 const Title = styled.h1`
@@ -27,10 +38,10 @@ const ItemBox = styled.div`
   gap: 15%;
   align-items: center;
   margin: 25px 15px;
-  padding: 18px 23px;
+  padding: 18px 30px;
   border-radius: 1rem;
   backdrop-filter: blur(10px);
-  background: #444;
+  background: ${({ theme }: { theme: Theme }) => theme.itemBox};
   transition: all 0.5s;
   cursor: default;
 
@@ -41,8 +52,8 @@ const ItemBox = styled.div`
 const ItemImgBox = styled.div`
   max-width: 180px;
   max-height: 180px;
-  width: 22vw;
-  height: 22vw;
+  width: 20vw;
+  height: 20vw;
   overflow: hidden;
   border-radius: 50%;
 `;
@@ -89,6 +100,7 @@ const BrandBadge = styled.span<{ brand?: string }>`
     if (props.brand === "CU") return "#6a3289";
     if (props.brand === "emart24") return "#f7b11b";
     if (props.brand === "7-ELEVEn") return "#007d5e";
+    if (props.brand === "MINISTOP") return "#1660a8";
     if (props.brand === "C·SPACE") return "#f4c300";
   }};
 `;
@@ -97,20 +109,33 @@ const PromoBadge = styled(BrandBadge)<{ promo: string }>`
   background: ${(props) => props.promo};
 `;
 
-function Main() {
-  const [pepsi, setPepsi] = useState<Pepsi[]>([]);
+const Loading = styled.p``;
 
-  interface Pepsi {
-    title: string;
-    price: string;
-    promo: string;
-    prodImg: string;
-    brand: string;
-  }
+interface Pepsi {
+  title: string;
+  price: string;
+  promo: string;
+  prodImg: string;
+  brand: string;
+}
+
+interface themeProps {
+  theme: string;
+  setTheme: (theme: string) => void;
+}
+
+function Main({ theme, setTheme }: themeProps) {
+  const [pepsi, setPepsi] = useState<Pepsi[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const currentMonth = new Date().getMonth() + 1;
+  const changeTheme = () => {
+    if (theme === "light") setTheme("dark");
+    else setTheme("light");
+  };
 
   useEffect(() => {
+    setLoading(true);
     const getData = async () => {
       const res = await axios.get("http://localhost:5000/api/pepsi");
       const data = await res.data.data;
@@ -120,6 +145,7 @@ function Main() {
         return Number(a.promo[0]) - Number(b.promo[0]);
       });
       setPepsi(data);
+      setLoading(false);
     };
 
     getData();
@@ -127,10 +153,14 @@ function Main() {
 
   return (
     <Container>
-      <Title>ZERO PEPSI FINDER</Title>
+      <Header>
+        <Title>ZERO PEPSI FINDER</Title>
+        <Switch onClick={changeTheme}>버튼</Switch>
+      </Header>
       <DateTitle>
         <strong>{currentMonth}월</strong>의 행사 정보
       </DateTitle>
+      {loading && <Loading>데이터를 불러오는 중입니다.</Loading>}
       {pepsi.map((el: Pepsi) => {
         return (
           <ItemBox key={el.title}>
