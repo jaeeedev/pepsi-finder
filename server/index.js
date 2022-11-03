@@ -9,6 +9,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:3000" }));
 
+const port = process.env.PORT || 5000;
+
 async function test() {
   let pepsiData = await pepsi.getData();
   return pepsiData;
@@ -21,7 +23,7 @@ app.get("/api/pepsi", async (req, res) => {
   });
 });
 
-app.listen(5000, () => {
+app.listen(port, () => {
   console.log("서버 열림");
 });
 
