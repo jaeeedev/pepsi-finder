@@ -10,27 +10,33 @@ const Container = styled.section`
   margin: 0 auto;
 `;
 const Header = styled.header`
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const Switch = styled.button`
-  width: 100px;
-  height: 30px;
+  min-width: 120px;
+  font-size: 17px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 2rem;
+  margin-right: 20px;
+  background: ${({ theme }: { theme: Theme }) => theme.switch};
+  color: ${({ theme }: { theme: Theme }) => theme.bg};
 `;
 
 const Title = styled.h1`
   font-family: "Poppins", sans-serif;
   font-size: 45px;
-  padding: 20px 30px 0px 30px;
-  margin-bottom: 10px;
+  padding: 0 30px;
 `;
 
 const DateTitle = styled.p`
-  margin-bottom: 20px;
   padding: 0 30px;
-  font-size: 25px;
+  font-size: 22px;
+  margin-bottom: 50px;
 `;
 
 const ItemBox = styled.div`
@@ -88,25 +94,47 @@ const ProdPrice = styled.h3`
   font-weight: 500;
 `;
 
-const BrandBadge = styled.span<{ brand?: string }>`
+const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
   display: inline-block;
   padding: 5px 13px;
   border-radius: 1rem;
   margin-right: 10px;
   font-weight: 500;
-  //브랜드 여부에 따라 백그라운드 색상 달라야함;
-  background: ${(props) => {
-    if (props.brand === "GS25") return "#29b4d3";
-    if (props.brand === "CU") return "#6a3289";
-    if (props.brand === "emart24") return "#f7b11b";
-    if (props.brand === "7-ELEVEn") return "#007d5e";
-    if (props.brand === "MINISTOP") return "#1660a8";
-    if (props.brand === "C·SPACE") return "#f4c300";
+  background: ${({ brand, theme }) => {
+    if (brand === "GS25") return theme.gs[0];
+    if (brand === "CU") return theme.cu[0];
+    if (brand === "emart24") return theme.em[0];
+    if (brand === "7-ELEVEn") return theme.se[0];
+    if (brand === "MINISTOP") return theme.mi[0];
+    if (brand === "C·SPACE") return theme.cs[0];
+  }};
+  border: ${({ brand, theme }) => {
+    if (brand === "GS25") return `1px solid ${theme.gs[1]}`;
+    if (brand === "CU") return `1px solid ${theme.cu[1]}`;
+    if (brand === "emart24") return `1px solid ${theme.em[1]}`;
+    if (brand === "7-ELEVEn") return `1px solid ${theme.se[1]}`;
+    if (brand === "MINISTOP") return `1px solid ${theme.mi[1]}`;
+    if (brand === "C·SPACE") return `1px solid ${theme.cs[1]}`;
+  }};
+  color: ${({ brand, theme }) => {
+    if (brand === "GS25") return theme.gs[1];
+    if (brand === "CU") return theme.cu[1];
+    if (brand === "emart24") return theme.em[1];
+    if (brand === "7-ELEVEn") return theme.se[1];
+    if (brand === "MINISTOP") return theme.mi[1];
+    if (brand === "C·SPACE") return theme.cs[1];
   }};
 `;
 
-const PromoBadge = styled(BrandBadge)<{ promo: string }>`
-  background: ${(props) => props.promo};
+const PromoBadge = styled(BrandBadge)<{ promo: string; theme: Theme }>`
+  background: ${({ promo, theme }) => {
+    if (promo === "1+1") return theme.get1[0];
+    else return theme.get2[0];
+  }};
+  border: ${({ promo, theme }) => {
+    if (promo === "1+1") return `1px solid ${theme.get1[1]}`;
+    else return `1px solid ${theme.get2[1]}`;
+  }};
 `;
 
 const Loading = styled.p``;
@@ -155,10 +183,12 @@ function Main({ theme, setTheme }: themeProps) {
     <Container>
       <Header>
         <Title>ZERO PEPSI FINDER</Title>
-        <Switch onClick={changeTheme}>버튼</Switch>
+        <Switch onClick={changeTheme}>
+          {theme === "dark" ? "밝게 보기" : "어둡게 보기"}
+        </Switch>
       </Header>
       <DateTitle>
-        <strong>{currentMonth}월</strong>의 행사 정보
+        <strong>{currentMonth}월</strong>의 행사 정보입니다.
       </DateTitle>
       {loading && <Loading>데이터를 불러오는 중입니다.</Loading>}
       {pepsi.map((el: Pepsi) => {
@@ -172,9 +202,7 @@ function Main({ theme, setTheme }: themeProps) {
               <DivideBox>
                 <BadgeBox>
                   <BrandBadge brand={el.brand}>{el.brand}</BrandBadge>
-                  <PromoBadge promo={el.promo === "1+1" ? "red" : "#3150ff"}>
-                    {el.promo}
-                  </PromoBadge>
+                  <PromoBadge promo={el.promo}>{el.promo}</PromoBadge>
                 </BadgeBox>
                 <ProdPrice>{el.price}</ProdPrice>
               </DivideBox>

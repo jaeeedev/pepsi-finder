@@ -8,11 +8,12 @@
 
 front-end: TypeScript, React, Styled-component
 back-end: JavaScript, Node.js, express
-library:
+another:
 cors -> api 요청 시 발생하는 cors 문제 해결
 cheerio: 할인 정보 크롤링 용도
 axios: http 통신을 간단한 문법으로 할 수 있음
 concurrently: 개발 단계에서 리액트, 노드 두가지 서버를 동시에 엶
+git: 로컬과 원격 저장소 커밋 용도
 
 ## 구현 설명
 
@@ -29,3 +30,6 @@ concurrently: 개발 단계에서 리액트, 노드 두가지 서버를 동시�
 ```
 
 1+1 행사가 가장 궁금하기 마련이라 sort를 통해 1+1 행사를 하는 상품부터 출력하도록 했습니다. promo는 `"1+1"`이나 `"2+1"` 두가지 문자열을 가지고 있습니다. 그래서 promo의 첫 글자를 숫자로 변환한 후 비교하여 오름차순 정렬하였습니다.
+
+styled-component의 theme 기능을 이용하여 다크모드/라이트모드를 구현했습니다.
+제로 펩시의 색상을 생각하여 디폴트 테마는 다크모드이며 상단 버튼을 클릭하면 라이트 모드로 변경됩니다.
