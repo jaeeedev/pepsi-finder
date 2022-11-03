@@ -13,6 +13,7 @@ const Title = styled.h1`
   font-family: "Poppins", sans-serif;
   font-size: 45px;
   padding: 20px 30px 0px 30px;
+  margin-bottom: 10px;
 `;
 
 const DateTitle = styled.p`
@@ -26,7 +27,7 @@ const ItemBox = styled.div`
   gap: 15%;
   align-items: center;
   margin: 25px 15px;
-  padding: 20px 25px;
+  padding: 18px 23px;
   border-radius: 1rem;
   backdrop-filter: blur(10px);
   background: #444;
@@ -38,13 +39,12 @@ const ItemBox = styled.div`
 `;
 
 const ItemImgBox = styled.div`
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 180px;
+  max-height: 180px;
   width: 22vw;
   height: 22vw;
   overflow: hidden;
   border-radius: 50%;
-  margin-bottom: 20px;
 `;
 
 const ItemImg = styled.img`
@@ -74,6 +74,7 @@ const DivideBox = styled.div`
 
 const ProdPrice = styled.h3`
   font-size: 20px;
+  font-weight: 500;
 `;
 
 const BrandBadge = styled.span<{ brand?: string }>`
@@ -114,6 +115,10 @@ function Main() {
       const res = await axios.get("http://localhost:5000/api/pepsi");
       const data = await res.data.data;
 
+      //1+1 먼저 뜨게 하기 위해
+      data.sort((a: Pepsi, b: Pepsi) => {
+        return Number(a.promo[0]) - Number(b.promo[0]);
+      });
       setPepsi(data);
     };
 
@@ -137,7 +142,7 @@ function Main() {
               <DivideBox>
                 <BadgeBox>
                   <BrandBadge brand={el.brand}>{el.brand}</BrandBadge>
-                  <PromoBadge promo={el.promo === "1+1" ? "red" : "orange"}>
+                  <PromoBadge promo={el.promo === "1+1" ? "red" : "#3150ff"}>
                     {el.promo}
                   </PromoBadge>
                 </BadgeBox>
