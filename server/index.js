@@ -8,7 +8,6 @@ const path = require("path");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:3000" }));
-//나중에 배포하고 나면 origin: [] 배열 안에 로컬 주소, 배포 주소 넣기
 
 async function test() {
   let pepsiData = await pepsi.getData();
