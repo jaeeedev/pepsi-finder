@@ -13,30 +13,43 @@ const Header = styled.header`
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Switch = styled.button`
   min-width: 120px;
   font-size: 17px;
+  font-weight: 600;
   padding: 10px 20px;
   border: none;
   border-radius: 2rem;
   margin-right: 20px;
+  margin-top: 4px;
   background: ${({ theme }: { theme: Theme }) => theme.switch};
   color: ${({ theme }: { theme: Theme }) => theme.bg};
+  transition: background 0.4s;
 `;
 
 const Title = styled.h1`
   font-family: "Poppins", sans-serif;
   font-size: 45px;
   padding: 0 30px;
+  line-height: 1;
+  margin-bottom: 15px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 35px;
+  }
 `;
 
 const DateTitle = styled.p`
   padding: 0 30px;
   font-size: 22px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 19px;
+  }
 `;
 
 const ItemBox = styled.div`
@@ -75,8 +88,13 @@ const ItemInfoBox = styled.div`
 `;
 
 const ProdTitle = styled.h2`
-  font-size: 27px;
+  font-size: 26px;
   margin-bottom: 20px;
+  letter-spacing: 0.015em;
+
+  @media screen and (max-width: 480px) {
+    font-size: 22px;
+  }
 `;
 
 const BadgeBox = styled.div`
@@ -92,6 +110,11 @@ const DivideBox = styled.div`
 const ProdPrice = styled.h3`
   font-size: 20px;
   font-weight: 500;
+  margin-bottom: 10px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
@@ -99,6 +122,7 @@ const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
   padding: 5px 13px;
   border-radius: 1rem;
   margin-right: 10px;
+  margin-bottom: 10px;
   font-weight: 500;
   background: ${({ brand, theme }) => {
     if (brand === "GS25") return theme.gs[0];
@@ -124,6 +148,10 @@ const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
     if (brand === "MINISTOP") return theme.mi[1];
     if (brand === "C·SPACE") return theme.cs[1];
   }};
+
+  @media screen and (max-width: 480px) {
+    font-size: 14px;
+  }
 `;
 
 const PromoBadge = styled(BrandBadge)<{ promo: string; theme: Theme }>`
@@ -137,7 +165,9 @@ const PromoBadge = styled(BrandBadge)<{ promo: string; theme: Theme }>`
   }};
 `;
 
-const Loading = styled.p``;
+const Loading = styled.p`
+  text-align: center;
+`;
 
 interface Pepsi {
   title: string;
@@ -188,7 +218,7 @@ function Main({ theme, setTheme }: themeProps) {
         </Switch>
       </Header>
       <DateTitle>
-        <strong>{currentMonth}월</strong>의 행사 정보입니다.
+        <strong>{currentMonth}월</strong>의 편의점 행사 정보입니다.
       </DateTitle>
       {loading && <Loading>데이터를 불러오는 중입니다.</Loading>}
       {pepsi.map((el: Pepsi) => {
