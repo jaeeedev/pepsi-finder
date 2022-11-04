@@ -195,7 +195,7 @@ function Main({ theme, setTheme }: themeProps) {
   useEffect(() => {
     setLoading(true);
     const getData = async () => {
-      const res = await axios.get("http://localhost:5000/api/pepsi");
+      const res = await axios.get("https://pepsi-finder.herokuapp.com/api/pepsi");
       const data = await res.data.data;
 
       //1+1 먼저 뜨게 하기 위해
