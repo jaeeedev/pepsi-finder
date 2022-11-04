@@ -1,19 +1,27 @@
 # ZERO PEPSI FINDER
 
-## 개요
+### 개요
 
 개인적으로 제로 펩시를 자주 사먹어서 매달 편의점의 제로 펩시 행사(1+1, 2+1) 정보를 보여주는 페이지를 제작했습니다.
 
+
+### 배포 링크
+
+[배포 페이지](https://pepsi-finder.herokuapp.com/)
+
+[포트폴리오 내 설명 페이지](https://www.jaeeedev.com/pepsi)
+
 ## 사용 기술
 
-front-end: TypeScript, React, Styled-component
-back-end: JavaScript, Node.js, express
-another:
-cors -> api 요청 시 발생하는 cors 문제 해결
-cheerio: 할인 정보 크롤링 용도
-axios: http 통신을 간단한 문법으로 할 수 있음
-concurrently: 개발 단계에서 리액트, 노드 두가지 서버를 동시에 엶
-git: 로컬과 원격 저장소 커밋 용도
+**client**: TypeScript, React, Styled-component    
+**server**: JavaScript, Node.js, express    
+**another**   
+cors: api 요청 시 발생하는 cors 문제 해결   
+cheerio: 할인 정보 크롤링 용도   
+axios: api 간편한 문법으로 요청   
+concurrently: 개발 단계에서 리액트, 노드 두가지 서버를 동시에 엶   
+git: 로컬과 원격 저장소 커밋 용도    
+heroku: 배포
 
 ## 구현 설명
 
@@ -51,3 +59,4 @@ export const lightTheme = {
   get2: ["#d2d9ff", "#4e5eeb"],
 };
 ```
+
