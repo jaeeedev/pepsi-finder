@@ -9,13 +9,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-async function test() {
-  let pepsiData = await pepsi.getData();
-  return pepsiData;
-}
-
 app.get("/api/pepsi", async (req, res) => {
-  const pepsiData = await test();
+  const pepsiData = await pepsi.getData();
   res.json({
     data: pepsiData,
   });
