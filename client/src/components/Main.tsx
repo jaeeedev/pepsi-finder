@@ -117,6 +117,26 @@ const ProdPrice = styled.h3`
   }
 `;
 
+interface ObjType {
+  [key: string]: string;
+  GS25: string;
+  CU: string;
+  emart24: string;
+  "7-ELEVEn": string;
+  MINISTOP: string;
+  "C·SPACE": string;
+}
+//key 가 string일것이라고 알려주지 않으면 obj[key] 방식으로 사용 불가능
+
+const brandArr: ObjType = {
+  GS25: "gs",
+  CU: "cu",
+  emart24: "em",
+  "7-ELEVEn": "se",
+  MINISTOP: "mi",
+  "C·SPACE": "cs",
+};
+
 const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
   display: inline-block;
   padding: 5px 13px;
@@ -125,28 +145,19 @@ const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
   margin-bottom: 10px;
   font-weight: 500;
   background: ${({ brand, theme }) => {
-    if (brand === "GS25") return theme.gs[0];
-    if (brand === "CU") return theme.cu[0];
-    if (brand === "emart24") return theme.em[0];
-    if (brand === "7-ELEVEn") return theme.se[0];
-    if (brand === "MINISTOP") return theme.mi[0];
-    if (brand === "C·SPACE") return theme.cs[0];
+    if (brand) {
+      return theme[brandArr[brand]][0];
+    }
   }};
   border: ${({ brand, theme }) => {
-    if (brand === "GS25") return `1px solid ${theme.gs[1]}`;
-    if (brand === "CU") return `1px solid ${theme.cu[1]}`;
-    if (brand === "emart24") return `1px solid ${theme.em[1]}`;
-    if (brand === "7-ELEVEn") return `1px solid ${theme.se[1]}`;
-    if (brand === "MINISTOP") return `1px solid ${theme.mi[1]}`;
-    if (brand === "C·SPACE") return `1px solid ${theme.cs[1]}`;
+    if (brand) {
+      return `1px solid ${theme[brandArr[brand]][1]}`;
+    }
   }};
   color: ${({ brand, theme }) => {
-    if (brand === "GS25") return theme.gs[1];
-    if (brand === "CU") return theme.cu[1];
-    if (brand === "emart24") return theme.em[1];
-    if (brand === "7-ELEVEn") return theme.se[1];
-    if (brand === "MINISTOP") return theme.mi[1];
-    if (brand === "C·SPACE") return theme.cs[1];
+    if (brand) {
+      return theme[brandArr[brand]][1];
+    }
   }};
 
   @media screen and (max-width: 480px) {
@@ -195,7 +206,9 @@ function Main({ theme, setTheme }: themeProps) {
   useEffect(() => {
     setLoading(true);
     const getData = async () => {
-      const res = await axios.get("https://pepsi-finder.herokuapp.com/api/pepsi");
+      const res = await axios.get(
+        "https://pepsi-finder.herokuapp.com/api/pepsi"
+      );
       const data = await res.data.data;
 
       //1+1 먼저 뜨게 하기 위해
