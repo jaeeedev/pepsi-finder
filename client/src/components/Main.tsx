@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Theme } from "../styles/theme";
+import {
+  ItemBox,
+  ItemImgBox,
+  ItemInfoBox,
+  ProdTitle,
+  DivideBox,
+} from "../styles/ui";
+import Skeleton from "./Skeleton";
 
 //768px
 const Container = styled.section`
@@ -52,59 +60,14 @@ const DateTitle = styled.p`
   }
 `;
 
-const ItemBox = styled.div`
-  display: flex;
-  gap: 15%;
-  align-items: center;
-  margin: 25px 15px;
-  padding: 18px 30px;
-  border-radius: 1rem;
-  backdrop-filter: blur(10px);
-  background: ${({ theme }: { theme: Theme }) => theme.itemBox};
-  transition: all 0.5s;
-  cursor: default;
-
-  &:hover {
-  }
-`;
-
-const ItemImgBox = styled.div`
-  max-width: 180px;
-  max-height: 180px;
-  width: 20vw;
-  height: 20vw;
-  overflow: hidden;
-  border-radius: 50%;
-`;
-
 const ItemImg = styled.img`
   display: block;
   width: 100%;
   height: 100%;
 `;
 
-const ItemInfoBox = styled.div`
-  flex: 1;
-`;
-
-const ProdTitle = styled.h2`
-  font-size: 26px;
-  margin-bottom: 20px;
-  letter-spacing: 0.015em;
-
-  @media screen and (max-width: 480px) {
-    font-size: 22px;
-  }
-`;
-
 const BadgeBox = styled.div`
   max-width: 400px;
-`;
-
-const DivideBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
 `;
 
 const ProdPrice = styled.h3`
@@ -145,19 +108,13 @@ const BrandBadge = styled.span<{ brand?: string; theme: Theme }>`
   margin-bottom: 10px;
   font-weight: 500;
   background: ${({ brand, theme }) => {
-    if (brand) {
-      return theme[brandArr[brand]][0];
-    }
+    return brand && theme[brandArr[brand]][0];
   }};
   border: ${({ brand, theme }) => {
-    if (brand) {
-      return `1px solid ${theme[brandArr[brand]][1]}`;
-    }
+    return brand && `1px solid ${theme[brandArr[brand]][1]}`;
   }};
   color: ${({ brand, theme }) => {
-    if (brand) {
-      return theme[brandArr[brand]][1];
-    }
+    return brand && theme[brandArr[brand]][1];
   }};
 
   @media screen and (max-width: 480px) {
@@ -233,7 +190,7 @@ function Main({ theme, setTheme }: themeProps) {
       <DateTitle>
         <strong>{currentMonth}월</strong>의 편의점 행사 정보입니다.
       </DateTitle>
-      {loading && <Loading>데이터를 불러오는 중입니다.</Loading>}
+      {loading && <Skeleton />}
       {pepsi.map((el: Pepsi) => {
         return (
           <ItemBox key={el.title}>

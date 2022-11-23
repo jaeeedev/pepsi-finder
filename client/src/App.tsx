@@ -3,6 +3,7 @@ import GlobalStyles from "./styles/GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { darkTheme, lightTheme } from "./styles/theme";
+import Skeleton from "./components/Skeleton";
 
 //11월의 행사 이런 문구 넣을 것
 
